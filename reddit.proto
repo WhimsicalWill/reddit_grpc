@@ -2,6 +2,17 @@ syntax = "proto3";
 
 package reddit;
 
+service RedditService {
+    // Create a Post
+    rpc CreatePost (Post) returns (PostResponse);
+
+    // TODO: add other required methods
+}
+
+message PostResponse {
+    string message = 1;
+}
+
 message User {
     string user_id = 1;  // A human-readable user ID
 }

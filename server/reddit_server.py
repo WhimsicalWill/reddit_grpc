@@ -16,9 +16,6 @@ comments = {}
 class RedditService(reddit_pb2_grpc.RedditServiceServicer):
 
     def CreatePost(self, request, context):
-        return reddit_pb2.PostResponse(message="Post created: " + request.title)
-
-    def CreatePost(self, request, context):
         post_id = str(uuid.uuid4())  # Generate a random UUID
 
         posts[post_id] = reddit_pb2.Post(
@@ -57,7 +54,6 @@ class RedditService(reddit_pb2_grpc.RedditServiceServicer):
             score=0,
             status=reddit_pb2.Comment.NORMAL,
             publication_date=str(time.strftime("%Y-%m-%d %H:%M:%S")),
-            # Assuming post_id is a reference to the parent post
             post_id=request.post_id
         )
 

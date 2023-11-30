@@ -41,8 +41,7 @@ message CreatePostRequest {
 }
 
 message CreatePostResponse {
-    string message = 1; // Acknowledgment message or created post ID
-    string post_id = 2;  // ID of the created post
+    Post post = 1;  // Return the created Post object
 }
 
 message VotePostRequest {
@@ -71,10 +70,8 @@ message CreateCommentRequest {
     }
 }
 
-
 message CreateCommentResponse {
-    string message = 1; // Acknowledgment message or created comment ID
-    string comment_id = 2;  // ID of the created comment
+    Comment comment = 1;  // Return the created Comment object
 }
 
 message VoteCommentRequest {
@@ -120,37 +117,39 @@ message User {
 }
 
 message Post {
-    string title = 1;
-    string text = 2;
+    string post_id = 1;
+    string title = 2;
+    string text = 3;
     oneof media {
-        string image_url = 3;
-        string video_url = 4;
+        string image_url = 4;
+        string video_url = 5;
     }
-    string author = 5;  // Optional
-    int32 score = 6;    // Can be negative
+    string author = 6;  // Optional
+    int32 score = 7;    // Can be negative
     enum State {
         NORMAL = 0;
         LOCKED = 1;
         HIDDEN = 2;
     }
-    State state = 7;
-    string publication_date = 8;  // TODO: Consider using a proper timestamp type
+    State state = 8;
+    string publication_date = 9;  // TODO: Consider using a proper timestamp type
 }
 
 message Comment {
-    string text = 1;
-    string author = 2;  // Always required for comments
-    int32 score = 3;
+    string comment_id = 1;
+    string text = 2;
+    string author = 3;  // Always required for comments
+    int32 score = 4;
     enum Status {
         NORMAL = 0;
         HIDDEN = 1;
     }
-    Status status = 4;
-    string publication_date = 5;  // TODO: Consider using a proper timestamp type
+    Status status = 5;
+    string publication_date = 6;  // TODO: Consider using a proper timestamp type
 
     // Reference either a parent post or a parent comment
     oneof parent {
-        string parent_post_id = 6;
-        string parent_comment_id = 7;
+        string parent_post_id = 7;
+        string parent_comment_id = 8;
     }
 }

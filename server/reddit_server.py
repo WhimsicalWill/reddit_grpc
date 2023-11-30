@@ -21,6 +21,7 @@ class RedditService(reddit_pb2_grpc.RedditServiceServicer):
 
         # Create a new Post object
         new_post = reddit_pb2.Post(
+            post_id=post_id,
             title=request.title,
             text=request.text,
             author=request.author,
@@ -42,7 +43,7 @@ class RedditService(reddit_pb2_grpc.RedditServiceServicer):
         # Store the new post
         posts[post_id] = new_post
         
-        return reddit_pb2.CreatePostResponse(message="Post created", post_id=post_id)
+        return reddit_pb2.CreatePostResponse(post=new_post)
 
     def VotePost(self, request, context):
         if request.post_id not in posts:
@@ -63,6 +64,7 @@ class RedditService(reddit_pb2_grpc.RedditServiceServicer):
         comment_id = str(uuid.uuid4())  # Generate a random UUID
 
         new_comment = reddit_pb2.Comment(
+            comment_id=comment_id,
             text=request.text,
             author=request.author,
             score=0,
@@ -83,7 +85,7 @@ class RedditService(reddit_pb2_grpc.RedditServiceServicer):
         # Store the new comment
         comments[comment_id] = new_comment
 
-        return reddit_pb2.CreateCommentResponse(message="Comment created", comment_id=comment_id)
+        return reddit_pb2.CreateCommentResponse(comment=new_comment)
 
     def VoteComment(self, request, context):
         if request.comment_id not in comments:

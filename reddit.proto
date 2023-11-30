@@ -19,7 +19,10 @@ service RedditService {
     rpc VoteComment (VoteCommentRequest) returns (VoteCommentResponse);
 
     // Retrieve a list of N most upvoted comments under a post
-    rpc GetTopComments (GetTopCommentsRequest) returns (GetTopCommentsResponse);
+    rpc GetTopCommentsUnderPost (GetTopCommentsUnderPostRequest) returns (GetTopCommentsResponse);
+
+    // Retrieve a list of N most upvoted comments under a comment
+    rpc GetTopCommentsUnderComment (GetTopCommentsUnderCommentRequest) returns (GetTopCommentsResponse);
 
     // Expand a comment branch
     // rpc ExpandCommentBranch (ExpandCommentBranchRequest) returns (ExpandCommentBranchResponse);
@@ -83,12 +86,21 @@ message VoteCommentResponse {
     string message = 1; // Acknowledgment message
 }
 
-message GetTopCommentsRequest {
+message GetTopCommentsUnderPostRequest {
     string post_id = 1;
-    int32 count = 2; // Number of top comments to retrieve
+    int32 count = 2;
 }
 
-message GetTopCommentsResponse {
+message GetTopCommentsUnderPostResponse {
+    repeated Comment comments = 1; // List of top comments
+}
+
+message GetTopCommentsUnderCommentRequest {
+    string comment_id = 1;
+    int32 count = 2;
+}
+
+message GetTopCommentsUnderCommentResponse {
     repeated Comment comments = 1; // List of top comments
 }
 

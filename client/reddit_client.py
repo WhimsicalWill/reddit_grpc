@@ -27,7 +27,7 @@ class RedditClient:
 
     def create_comment(self, text, author, parent_post_id=None, parent_comment_id=None):
         # Create the request and set the parent based on input
-        request = reddit_pb2.CreateCommentRequest(text=text, author=author, parent=parent)
+        request = reddit_pb2.CreateCommentRequest(text=text, author=author)
         if parent_post_id:
             request.parent_post_id = parent_post_id
         elif parent_comment_id:
@@ -39,9 +39,13 @@ class RedditClient:
         request = reddit_pb2.VoteCommentRequest(comment_id=comment_id, upvote=upvote)
         return self.stub.VoteComment(request)
 
-    def get_top_comments(self, post_id, count):
-        request = reddit_pb2.GetTopCommentsRequest(post_id=post_id, count=count)
-        return self.stub.GetTopComments(request)
+    def get_top_comments_under_post(self, post_id, count):
+        request = reddit_pb2.GetTopCommentsUnderPostRequest(post_id=post_id, count=count)
+        return self.stub.GetTopCommentsUnderPost(request)
+
+    def get_top_comments_under_comment(self, comment_id, count):
+        request = reddit_pb2.GetTopCommentsUnderCommentRequest(comment_id=comment_id, count=count)
+        return self.stub.GetTopCommentsUnderComment(request)
 
 if __name__ == "__main__":
     client = RedditClient()

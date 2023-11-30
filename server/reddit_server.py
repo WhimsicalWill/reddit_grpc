@@ -92,12 +92,16 @@ class RedditService(reddit_pb2_grpc.RedditServiceServicer):
         comments[request.comment_id].score += 1 if request.upvote else -1
         return reddit_pb2.VoteCommentResponse(message="Vote recorded")
 
-    def GetTopComments(self, request, context):
-        filtered_comments = [comment for comment in comments.values() if comment.post_id == request.post_id]
+    def GetTopCommentsUnderPost(self, request, context):
+        filtered_comments = [comment for comment in comments.values() if comment.parent_post_id == request.post_id]
         sorted_comments = sorted(filtered_comments, key=lambda x: x.score, reverse=True)
-        top_comments = sorted_comments[:request.count]
-        
-        return reddit_pb2.GetTopCommentsResponse(comments=top_comments)
+        return reddit_pb2.GetTopCommentsResponse(comments=sorted_comments[:request.count])
+
+    def GetTopCommentsUnderComment(self, request, context):
+        filtered_comments = [comment for comment in comments.values() if comment.parent_comment_id == request.comment_id]
+        sorted_comments = sorted(filtered_comments, key=lambda x: x.score, reverse=True)
+        return reddit_pb2.GetTopCommentsResponse(comments=sorted_comments[:request.count])
+
 
 def parse_arguments():
     parser = argparse.ArgumentParser(description='Reddit gRPC Server')

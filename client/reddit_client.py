@@ -1,4 +1,4 @@
-from reddit_pb2 import User, Post
+from protos.reddit_pb2 import User, Post
 
 user = User(user_id="user123")
 post = Post(title="Example Title", text="This is a post", score=10)

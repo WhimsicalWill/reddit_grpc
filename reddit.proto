@@ -22,7 +22,7 @@ service RedditService {
     rpc GetTopComments (GetTopCommentsRequest) returns (GetTopCommentsResponse);
 
     // Expand a comment branch
-    rpc ExpandCommentBranch (ExpandCommentBranchRequest) returns (ExpandCommentBranchResponse);
+    // rpc ExpandCommentBranch (ExpandCommentBranchRequest) returns (ExpandCommentBranchResponse);
 }
 
 message CreatePostRequest {
@@ -87,16 +87,16 @@ message GetTopCommentsResponse {
     repeated Comment comments = 1; // List of top comments
 }
 
-message ExpandCommentBranchRequest {
-    string comment_id = 1;
-    int32 depth = 2; // Depth of the tree to retrieve
-}
+// message ExpandCommentBranchRequest {
+//     string comment_id = 1;
+//     int32 depth = 2; // Depth of the tree to retrieve
+// }
 
-message ExpandCommentBranchResponse {
-    // Define the structure to represent a comment tree
-    // This could be a list of comments with their replies
-    // TODO: Define the structure
-}
+// message ExpandCommentBranchResponse {
+//     // Define the structure to represent a comment tree
+//     // This could be a list of comments with their replies
+//     // TODO: Define the structure
+// }
 
 message User {
     string user_id = 1;  // A human-readable user ID

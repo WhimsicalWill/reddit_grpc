@@ -4,6 +4,7 @@ from concurrent import futures
 import time
 import uuid
 import sys
+import argparse
 
 # Import the generated classes
 import reddit_pb2, reddit_pb2_grpc
@@ -73,10 +74,15 @@ class RedditService(reddit_pb2_grpc.RedditServiceServicer):
         
         return reddit_pb2.GetTopCommentsResponse(comments=top_comments)
 
+def parse_arguments():
+    parser = argparse.ArgumentParser(description='Reddit gRPC Server')
+    parser.add_argument('--port', type=int, default=50051, help='Port to listen on (default: 50051)')
+    parser.add_argument('--max_workers', type=int, default=10, help='Number of thread workers (default: 10)')
+    return parser.parse_args()
+
 # Create a gRPC server
-def serve():
-    port = "50051"
-    server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
+def serve(port, max_workers):
+    server = grpc.server(futures.ThreadPoolExecutor(max_workers=max_workers))
     reddit_pb2_grpc.add_RedditServiceServicer_to_server(RedditService(), server)
     server.add_insecure_port("[::]:" + port)
     server.start()
@@ -85,4 +91,5 @@ def serve():
 
 if __name__ == '__main__':
     logging.basicConfig()
-    serve()
+    args = parse_arguments()
+    serve(args.port, args.max_workers)

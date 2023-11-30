@@ -19,17 +19,30 @@ class RedditService(reddit_pb2_grpc.RedditServiceServicer):
     def CreatePost(self, request, context):
         post_id = str(uuid.uuid4())  # Generate a random UUID
 
-        posts[post_id] = reddit_pb2.Post(
+        # Create a new Post object
+        new_post = reddit_pb2.Post(
             title=request.title,
             text=request.text,
-            media=request.media,
             author=request.author,
             score=0,
             state=reddit_pb2.Post.NORMAL,
             publication_date=str(time.strftime("%Y-%m-%d %H:%M:%S"))
         )
+
+        # Set the media based on the request
+        if request.HasField("image_url"):
+            new_post.image_url = request.image_url
+        elif request.HasField("video_url"):
+            new_post.video_url = request.video_url
+        else:  # No media: raise an error
+            context.set_code(grpc.StatusCode.INVALID_ARGUMENT)
+            context.set_details('Must provide either image_url or video_url')
+            return reddit_pb2.CreatePostResponse()
+
+        # Store the new post
+        posts[post_id] = new_post
         
-        return reddit_pb2.CreatePostResponse(message=f"Post created with ID: {post_id}")
+        return reddit_pb2.CreatePostResponse(message="Post created", post_id=post_id)
 
     def VotePost(self, request, context):
         if request.post_id not in posts:
@@ -49,16 +62,28 @@ class RedditService(reddit_pb2_grpc.RedditServiceServicer):
     def CreateComment(self, request, context):
         comment_id = str(uuid.uuid4())  # Generate a random UUID
 
-        comments[comment_id] = reddit_pb2.Comment(
+        new_comment = reddit_pb2.Comment(
             text=request.text,
             author=request.author,
             score=0,
             status=reddit_pb2.Comment.NORMAL,
             publication_date=str(time.strftime("%Y-%m-%d %H:%M:%S")),
-            post_id=request.post_id
         )
+        
+        # Set the media based on the request
+        if request.HasField("parent_post_id"):
+            new_comment.parent_post_id = request.parent_post_id
+        elif request.HasField("parent_comment_id"):
+            new_comment.parent_comment_id = request.parent_comment_id
+        else:  # No media: raise an error
+            context.set_code(grpc.StatusCode.INVALID_ARGUMENT)
+            context.set_details('Must provide either parent_post_id or parent_comment_id')
+            return reddit_pb2.CreateCommentResponse()
 
-        return reddit_pb2.CreateCommentResponse(message=f"Comment created with ID: {comment_id}")
+        # Store the new comment
+        comments[comment_id] = new_comment
+
+        return reddit_pb2.CreateCommentResponse(message="Comment created", comment_id=comment_id)
 
     def VoteComment(self, request, context):
         if request.comment_id not in comments:
@@ -84,9 +109,9 @@ def parse_arguments():
 def serve(port, max_workers):
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=max_workers))
     reddit_pb2_grpc.add_RedditServiceServicer_to_server(RedditService(), server)
-    server.add_insecure_port("[::]:" + port)
+    server.add_insecure_port(f"[::]:{port}")
     server.start()
-    print("Server started, listening on " + port)
+    print(f"Server started, listening on {port}")
     server.wait_for_termination()
 
 if __name__ == '__main__':

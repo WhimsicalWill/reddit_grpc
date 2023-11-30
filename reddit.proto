@@ -39,6 +39,7 @@ message CreatePostRequest {
 
 message CreatePostResponse {
     string message = 1; // Acknowledgment message or created post ID
+    string post_id = 2;  // ID of the created post
 }
 
 message VotePostRequest {
@@ -61,12 +62,16 @@ message GetPostResponse {
 message CreateCommentRequest {
     string text = 1;
     string author = 2; // Author's user ID
-    string post_id = 3; // ID of the post being commented on
-    // Additional fields can be added as needed
+    oneof parent {
+        string parent_post_id = 3;
+        string parent_comment_id = 4;
+    }
 }
+
 
 message CreateCommentResponse {
     string message = 1; // Acknowledgment message or created comment ID
+    string comment_id = 2;  // ID of the created comment
 }
 
 message VoteCommentRequest {
@@ -130,6 +135,10 @@ message Comment {
     }
     Status status = 4;
     string publication_date = 5;  // TODO: Consider using a proper timestamp type
-    // TODO: Reference to parent Post or Comment could be added here
-}
 
+    // Reference either a parent post or a parent comment
+    oneof parent {
+        string parent_post_id = 6;
+        string parent_comment_id = 7;
+    }
+}

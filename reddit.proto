@@ -4,13 +4,98 @@ package reddit;
 
 service RedditService {
     // Create a Post
-    rpc CreatePost (Post) returns (PostResponse);
+    rpc CreatePost (CreatePostRequest) returns (CreatePostResponse);
 
-    // TODO: add other required methods
+    // Upvote or downvote a Post
+    rpc VotePost (VotePostRequest) returns (VotePostResponse);
+
+    // Retrieve Post content
+    rpc GetPost (GetPostRequest) returns (GetPostResponse);
+
+    // Create a Comment
+    rpc CreateComment (CreateCommentRequest) returns (CreateCommentResponse);
+
+    // Upvote or downvote a Comment
+    rpc VoteComment (VoteCommentRequest) returns (VoteCommentResponse);
+
+    // Retrieve a list of N most upvoted comments under a post
+    rpc GetTopComments (GetTopCommentsRequest) returns (GetTopCommentsResponse);
+
+    // Expand a comment branch
+    rpc ExpandCommentBranch (ExpandCommentBranchRequest) returns (ExpandCommentBranchResponse);
 }
 
-message PostResponse {
-    string message = 1;
+message CreatePostRequest {
+    // Fields for creating a post
+    string title = 1;
+    string text = 2;
+    oneof media {
+        string image_url = 3;
+        string video_url = 4;
+    }
+    string author = 5; // Optional
+    // Additional fields can be added as needed
+}
+
+message CreatePostResponse {
+    string message = 1; // Acknowledgment message or created post ID
+}
+
+message VotePostRequest {
+    string post_id = 1;
+    bool upvote = 2; // True for upvote, False for downvote
+}
+
+message VotePostResponse {
+    string message = 1; // Acknowledgment message
+}
+
+message GetPostRequest {
+    string post_id = 1; // ID of the post to retrieve
+}
+
+message GetPostResponse {
+    Post post = 1; // The requested post
+}
+
+message CreateCommentRequest {
+    string text = 1;
+    string author = 2; // Author's user ID
+    string post_id = 3; // ID of the post being commented on
+    // Additional fields can be added as needed
+}
+
+message CreateCommentResponse {
+    string message = 1; // Acknowledgment message or created comment ID
+}
+
+message VoteCommentRequest {
+    string comment_id = 1;
+    bool upvote = 2; // True for upvote, False for downvote
+}
+
+message VoteCommentResponse {
+    string message = 1; // Acknowledgment message
+}
+
+message GetTopCommentsRequest {
+    string post_id = 1;
+    int32 count = 2; // Number of top comments to retrieve
+}
+
+message GetTopCommentsResponse {
+    repeated Comment comments = 1; // List of top comments
+}
+
+message ExpandCommentBranchRequest {
+    string comment_id = 1;
+    int32 depth = 2; // Depth of the tree to retrieve
+}
+
+message ExpandCommentBranchResponse {
+    // Define the structure to represent a comment tree
+    // This could be a list of comments with their replies
+    // TODO: Define the structure
 }
 
 message User {

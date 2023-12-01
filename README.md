@@ -1,6 +1,8 @@
 # Install dependencies
 
-pip install grpc_tools grpc
+```bash
+pip install -r requirements.txt
+```
 
 # Generate stubs and gRPC code from .proto file
 

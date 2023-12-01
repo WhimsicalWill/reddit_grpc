@@ -34,7 +34,8 @@ message CreatePostRequest {
         string video_url = 4;
     }
     string author = 5; // Optional
-    // Additional fields can be added as needed
+    string subreddit_id = 6; // ID of the subreddit to post to
+    repeated string tags = 7; // Tags associated with the post
 }
 
 message CreatePostResponse {
@@ -120,6 +121,8 @@ message Post {
     }
     State state = 8;
     string publication_date = 9;  // TODO: Consider using a proper timestamp type
+    string subreddit_id = 10;  // ID of the subreddit the post belongs to
+    repeated string tags = 11;  // Tags associated with the post
 }
 
 message Comment {
@@ -147,5 +150,19 @@ message Comment {
 // Recursive structure to hold a comment and (potentially) its top replies
 message CommentNode {
     Comment comment = 1;
-    repeated Comment children = 2; // Replies to this comment
+    repeated Comment children = 2;  // Replies to this comment
+}
+
+message Subreddit {
+    string subreddit_id = 1;
+    string name = 2;
+    enum Visibility {
+        PUBLIC = 0;
+        PRIVATE = 1;
+        HIDDEN = 2;
+    }
+    Visibility visibility = 3;
+    // Available tags for posts within this subreddit
+    repeated string tags = 4;
+    repeated string post_ids = 5;  // IDs of posts in this subreddit
 }

@@ -13,6 +13,7 @@ import reddit_pb2_grpc
 # Store posts and comments in memory
 posts = {}
 comments = {}
+subreddits = {}
 
 # Implement the RedditService
 class RedditService(reddit_pb2_grpc.RedditServiceServicer):
@@ -28,7 +29,9 @@ class RedditService(reddit_pb2_grpc.RedditServiceServicer):
             author=request.author,
             score=0,
             state=reddit_pb2.Post.NORMAL,
-            publication_date=str(time.strftime("%Y-%m-%d %H:%M:%S"))
+            publication_date=str(time.strftime("%Y-%m-%d %H:%M:%S")),
+            subreddit_id=request.subreddit_id,
+            tags=request.tags,
         )
 
         # Set the media based on the request
@@ -41,8 +44,14 @@ class RedditService(reddit_pb2_grpc.RedditServiceServicer):
             context.set_details('Must provide either image_url or video_url')
             return reddit_pb2.CreatePostResponse()
 
-        # Store the new post
+        # Add the new post to the posts dictionary
         posts[post_id] = new_post
+
+        # Create the associated subreddit if it doesn't exist
+        if request.subreddit_id not in subreddits:
+            subreddits[request.subreddit_id] = reddit_pb2.Subreddit(subreddit_id=request.subreddit_id, post_ids=[])
+        # Add the new post to the subreddit
+        subreddits[request.subreddit_id].post_ids.append(post_id)
         
         return reddit_pb2.CreatePostResponse(post=new_post)
 

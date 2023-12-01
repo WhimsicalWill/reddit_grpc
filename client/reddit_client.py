@@ -7,9 +7,9 @@ class RedditClient:
         self.channel = grpc.insecure_channel(f"{host}:{port}")
         self.stub = reddit_pb2_grpc.RedditServiceStub(self.channel)
 
-    def create_post(self, title, text, image_url=None, video_url=None, author=None):
+    def create_post(self, title, text, image_url=None, video_url=None, author=None, subreddit_id=None, tags=None):
         # Create the request and set image_url or video_url based on input
-        request = reddit_pb2.CreatePostRequest(title=title, text=text, author=author)
+        request = reddit_pb2.CreatePostRequest(title=title, text=text, author=author, subreddit_id=subreddit_id, tags=tags)
         if image_url:
             request.image_url = image_url
         elif video_url:

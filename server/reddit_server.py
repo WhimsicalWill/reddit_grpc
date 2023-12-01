@@ -7,7 +7,8 @@ import sys
 import argparse
 
 # Import the generated classes
-import reddit_pb2, reddit_pb2_grpc
+import reddit_pb2
+import reddit_pb2_grpc
 
 # Store posts and comments in memory
 posts = {}
@@ -97,12 +98,12 @@ class RedditService(reddit_pb2_grpc.RedditServiceServicer):
     def GetTopCommentsUnderPost(self, request, context):
         filtered_comments = [comment for comment in comments.values() if comment.parent_post_id == request.post_id]
         sorted_comments = sorted(filtered_comments, key=lambda x: x.score, reverse=True)
-        return reddit_pb2.GetTopCommentsResponse(comments=sorted_comments[:request.count])
+        return reddit_pb2.GetTopCommentsUnderPostResponse(comments=sorted_comments[:request.count])
 
     def GetTopCommentsUnderComment(self, request, context):
         filtered_comments = [comment for comment in comments.values() if comment.parent_comment_id == request.comment_id]
         sorted_comments = sorted(filtered_comments, key=lambda x: x.score, reverse=True)
-        return reddit_pb2.GetTopCommentsResponse(comments=sorted_comments[:request.count])
+        return reddit_pb2.GetTopCommentsUnderCommentResponse(comments=sorted_comments[:request.count])
 
 
 def parse_arguments():

@@ -19,10 +19,10 @@ service RedditService {
     rpc VoteComment (VoteCommentRequest) returns (VoteCommentResponse);
 
     // Retrieve a list of N most upvoted comments under a post
-    rpc GetTopCommentsUnderPost (GetTopCommentsUnderPostRequest) returns (GetTopCommentsResponse);
+    rpc GetTopCommentsUnderPost (GetTopCommentsUnderPostRequest) returns (GetTopCommentsUnderPostResponse);
 
     // Retrieve a list of N most upvoted comments under a comment
-    rpc GetTopCommentsUnderComment (GetTopCommentsUnderCommentRequest) returns (GetTopCommentsResponse);
+    rpc GetTopCommentsUnderComment (GetTopCommentsUnderCommentRequest) returns (GetTopCommentsUnderCommentResponse);
 
     // Expand a comment branch
     // rpc ExpandCommentBranch (ExpandCommentBranchRequest) returns (ExpandCommentBranchResponse);

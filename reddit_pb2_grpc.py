@@ -39,10 +39,15 @@ class RedditServiceStub(object):
                 request_serializer=reddit__pb2.VoteCommentRequest.SerializeToString,
                 response_deserializer=reddit__pb2.VoteCommentResponse.FromString,
                 )
-        self.GetTopComments = channel.unary_unary(
-                '/reddit.RedditService/GetTopComments',
-                request_serializer=reddit__pb2.GetTopCommentsRequest.SerializeToString,
-                response_deserializer=reddit__pb2.GetTopCommentsResponse.FromString,
+        self.GetTopCommentsUnderPost = channel.unary_unary(
+                '/reddit.RedditService/GetTopCommentsUnderPost',
+                request_serializer=reddit__pb2.GetTopCommentsUnderPostRequest.SerializeToString,
+                response_deserializer=reddit__pb2.GetTopCommentsUnderPostResponse.FromString,
+                )
+        self.GetTopCommentsUnderComment = channel.unary_unary(
+                '/reddit.RedditService/GetTopCommentsUnderComment',
+                request_serializer=reddit__pb2.GetTopCommentsUnderCommentRequest.SerializeToString,
+                response_deserializer=reddit__pb2.GetTopCommentsUnderCommentResponse.FromString,
                 )
 
 
@@ -84,8 +89,15 @@ class RedditServiceServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
-    def GetTopComments(self, request, context):
+    def GetTopCommentsUnderPost(self, request, context):
         """Retrieve a list of N most upvoted comments under a post
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def GetTopCommentsUnderComment(self, request, context):
+        """Retrieve a list of N most upvoted comments under a comment
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -119,10 +131,15 @@ def add_RedditServiceServicer_to_server(servicer, server):
                     request_deserializer=reddit__pb2.VoteCommentRequest.FromString,
                     response_serializer=reddit__pb2.VoteCommentResponse.SerializeToString,
             ),
-            'GetTopComments': grpc.unary_unary_rpc_method_handler(
-                    servicer.GetTopComments,
-                    request_deserializer=reddit__pb2.GetTopCommentsRequest.FromString,
-                    response_serializer=reddit__pb2.GetTopCommentsResponse.SerializeToString,
+            'GetTopCommentsUnderPost': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetTopCommentsUnderPost,
+                    request_deserializer=reddit__pb2.GetTopCommentsUnderPostRequest.FromString,
+                    response_serializer=reddit__pb2.GetTopCommentsUnderPostResponse.SerializeToString,
+            ),
+            'GetTopCommentsUnderComment': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetTopCommentsUnderComment,
+                    request_deserializer=reddit__pb2.GetTopCommentsUnderCommentRequest.FromString,
+                    response_serializer=reddit__pb2.GetTopCommentsUnderCommentResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -220,7 +237,7 @@ class RedditService(object):
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
-    def GetTopComments(request,
+    def GetTopCommentsUnderPost(request,
             target,
             options=(),
             channel_credentials=None,
@@ -230,8 +247,25 @@ class RedditService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/reddit.RedditService/GetTopComments',
-            reddit__pb2.GetTopCommentsRequest.SerializeToString,
-            reddit__pb2.GetTopCommentsResponse.FromString,
+        return grpc.experimental.unary_unary(request, target, '/reddit.RedditService/GetTopCommentsUnderPost',
+            reddit__pb2.GetTopCommentsUnderPostRequest.SerializeToString,
+            reddit__pb2.GetTopCommentsUnderPostResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def GetTopCommentsUnderComment(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/reddit.RedditService/GetTopCommentsUnderComment',
+            reddit__pb2.GetTopCommentsUnderCommentRequest.SerializeToString,
+            reddit__pb2.GetTopCommentsUnderCommentResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

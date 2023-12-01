@@ -5,20 +5,24 @@ def retrieve_and_expand_comments(client, post_id):
     Retrieves a post, its most upvoted comments, expands the most upvoted comment,
     and returns the most upvoted reply under it, or None if no comments or replies exist.
     """
+    # Retrieve the post from its ID
     post_response = client.get_post(post_id)
     if not post_response or not post_response.post:
         return None
     print(f"Post:\n{post_response.post}")
 
+    # Retrieve the top comments under the post
     top_comments_response = client.get_top_comments_under_post(post_id, count=5)
     if not top_comments_response or not top_comments_response.comments:
         return None
     print(f"Top comments:\n{top_comments_response.comments}")
 
+    # Retrieve the top comments under the most upvoted comment
     most_upvoted_comment = top_comments_response.comments[0]
     replies_response = client.get_top_comments_under_comment(most_upvoted_comment.comment_id, count=5)
     print(f"Replies to most upvoted comment:\n{replies_response.comments}")
 
+    # Return the most upvoted reply under the most upvoted comment
     return replies_response.comments[0] if replies_response.comments else None
 
 def setup_data(client):

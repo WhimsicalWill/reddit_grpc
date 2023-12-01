@@ -46,8 +46,3 @@ class RedditClient:
     def get_top_comments_under_comment(self, comment_id, count):
         request = reddit_pb2.GetTopCommentsUnderCommentRequest(comment_id=comment_id, count=count)
         return self.stub.GetTopCommentsUnderComment(request)
-
-if __name__ == "__main__":
-    client = RedditClient()
-    response = client.create_post(title="Hello", text="This is a test post", image_url="image_url", author="user123")
-    print(response)

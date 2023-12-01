@@ -8,14 +8,14 @@ pip install grpc_tools grpc
 python -m grpc_tools.protoc -I. --python_out=. --grpc_python_out=. reddit.proto
 ```
 
-# Run the server code
+# Start the server
 
 ```bash
 python -m server.reddit_server
 ```
 
-# Run the client code
+# Run the test code
 
 ```bash
-python -m client.reddit_client
+python test.py
 ```

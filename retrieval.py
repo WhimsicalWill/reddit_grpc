@@ -9,23 +9,23 @@ def retrieve_and_expand_comments(client, post_id):
     post_response = client.get_post(post_id)
     if not post_response or not post_response.post:
         return None
-    print(f"Post:\n{post_response.post}")
 
     # Retrieve the top comments under the post
     top_comments_response = client.get_top_comments_under_post(post_id, count=5)
     if not top_comments_response or not top_comments_response.comments:
         return None
-    print(f"Top comments:\n{top_comments_response.comments}")
 
     # Retrieve the top comments under the most upvoted comment
     most_upvoted_comment = top_comments_response.comments[0]
     replies_response = client.get_top_comments_under_comment(most_upvoted_comment.comment_id, count=5)
-    print(f"Replies to most upvoted comment:\n{replies_response.comments}")
 
     # Return the most upvoted reply under the most upvoted comment
     return replies_response.comments[0] if replies_response.comments else None
 
 def setup_data(client):
+    """
+    Sets up real data in the server for end-to-end testing.
+    """
     # Create a post and directly access its object from the response
     post = client.create_post(title="Hello", text="This is a test post", image_url="image_url", author="user123").post
 

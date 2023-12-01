@@ -10,14 +10,26 @@ pip install -r requirements.txt
 python -m grpc_tools.protoc -I. --python_out=. --grpc_python_out=. reddit.proto
 ```
 
-# Start the server
+# Unit testing
+
+This just checks the business logic of the retrieve_and_expand_comments() function inside retrieval.py
+
+To run unit tests, execute the following command:
+
+```bash
+python test_retrieval.py
+```
+
+# End-to-end testing
+
+## Start the server
 
 ```bash
 python -m server.reddit_server
 ```
 
-# Run the test code
+## Run the test code
 
 ```bash
-python test.py
+python retrieval.py
 ```

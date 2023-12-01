@@ -15,12 +15,15 @@ def retrieve_and_expand_comments(client, post_id):
     if not top_comments_response or not top_comments_response.comments:
         return None
 
-    # Retrieve the top comments under the most upvoted comment
+    # Expand the most upvoted comment branch
     most_upvoted_comment = top_comments_response.comments[0]
-    replies_response = client.get_top_comments_under_comment(most_upvoted_comment.comment_id, count=5)
+    branch_response = client.expand_comment_branch(most_upvoted_comment.comment_id, count=5)
+    if not branch_response or not branch_response.comment_nodes:
+        return None
 
-    # Return the most upvoted reply under the most upvoted comment
-    return replies_response.comments[0] if replies_response.comments else None
+    # Retrieve the most upvoted reply under the most upvoted comment
+    most_upvoted_reply = branch_response.comment_nodes[0].comment
+    return most_upvoted_reply
 
 def setup_data(client):
     """

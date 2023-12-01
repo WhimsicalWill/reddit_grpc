@@ -13,7 +13,7 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0creddit.proto\x12\x06reddit\"s\n\x11\x43reatePostRequest\x12\r\n\x05title\x18\x01 \x01(\t\x12\x0c\n\x04text\x18\x02 \x01(\t\x12\x13\n\timage_url\x18\x03 \x01(\tH\x00\x12\x13\n\tvideo_url\x18\x04 \x01(\tH\x00\x12\x0e\n\x06\x61uthor\x18\x05 \x01(\tB\x07\n\x05media\"0\n\x12\x43reatePostResponse\x12\x1a\n\x04post\x18\x01 \x01(\x0b\x32\x0c.reddit.Post\"2\n\x0fVotePostRequest\x12\x0f\n\x07post_id\x18\x01 \x01(\t\x12\x0e\n\x06upvote\x18\x02 \x01(\x08\"#\n\x10VotePostResponse\x12\x0f\n\x07message\x18\x01 \x01(\t\"!\n\x0eGetPostRequest\x12\x0f\n\x07post_id\x18\x01 \x01(\t\"-\n\x0fGetPostResponse\x12\x1a\n\x04post\x18\x01 \x01(\x0b\x32\x0c.reddit.Post\"u\n\x14\x43reateCommentRequest\x12\x0c\n\x04text\x18\x01 \x01(\t\x12\x0e\n\x06\x61uthor\x18\x02 \x01(\t\x12\x18\n\x0eparent_post_id\x18\x03 \x01(\tH\x00\x12\x1b\n\x11parent_comment_id\x18\x04 \x01(\tH\x00\x42\x08\n\x06parent\"9\n\x15\x43reateCommentResponse\x12 \n\x07\x63omment\x18\x01 \x01(\x0b\x32\x0f.reddit.Comment\"8\n\x12VoteCommentRequest\x12\x12\n\ncomment_id\x18\x01 \x01(\t\x12\x0e\n\x06upvote\x18\x02 \x01(\x08\"&\n\x13VoteCommentResponse\x12\x0f\n\x07message\x18\x01 \x01(\t\"@\n\x1eGetTopCommentsUnderPostRequest\x12\x0f\n\x07post_id\x18\x01 \x01(\t\x12\r\n\x05\x63ount\x18\x02 \x01(\x05\"D\n\x1fGetTopCommentsUnderPostResponse\x12!\n\x08\x63omments\x18\x01 \x03(\x0b\x32\x0f.reddit.Comment\"F\n!GetTopCommentsUnderCommentRequest\x12\x12\n\ncomment_id\x18\x01 \x01(\t\x12\r\n\x05\x63ount\x18\x02 \x01(\x05\"G\n\"GetTopCommentsUnderCommentResponse\x12!\n\x08\x63omments\x18\x01 \x03(\x0b\x32\x0f.reddit.Comment\"\x17\n\x04User\x12\x0f\n\x07user_id\x18\x01 \x01(\t\"\xf0\x01\n\x04Post\x12\x0f\n\x07post_id\x18\x01 \x01(\t\x12\r\n\x05title\x18\x02 \x01(\t\x12\x0c\n\x04text\x18\x03 \x01(\t\x12\x13\n\timage_url\x18\x04 \x01(\tH\x00\x12\x13\n\tvideo_url\x18\x05 \x01(\tH\x00\x12\x0e\n\x06\x61uthor\x18\x06 \x01(\t\x12\r\n\x05score\x18\x07 \x01(\x05\x12!\n\x05state\x18\x08 \x01(\x0e\x32\x12.reddit.Post.State\x12\x18\n\x10publication_date\x18\t \x01(\t\"+\n\x05State\x12\n\n\x06NORMAL\x10\x00\x12\n\n\x06LOCKED\x10\x01\x12\n\n\x06HIDDEN\x10\x02\x42\x07\n\x05media\"\xef\x01\n\x07\x43omment\x12\x12\n\ncomment_id\x18\x01 \x01(\t\x12\x0c\n\x04text\x18\x02 \x01(\t\x12\x0e\n\x06\x61uthor\x18\x03 \x01(\t\x12\r\n\x05score\x18\x04 \x01(\x05\x12&\n\x06status\x18\x05 \x01(\x0e\x32\x16.reddit.Comment.Status\x12\x18\n\x10publication_date\x18\x06 \x01(\t\x12\x18\n\x0eparent_post_id\x18\x07 \x01(\tH\x00\x12\x1b\n\x11parent_comment_id\x18\x08 \x01(\tH\x00\" \n\x06Status\x12\n\n\x06NORMAL\x10\x00\x12\n\n\x06HIDDEN\x10\x01\x42\x08\n\x06parent2\xc6\x04\n\rRedditService\x12\x43\n\nCreatePost\x12\x19.reddit.CreatePostRequest\x1a\x1a.reddit.CreatePostResponse\x12=\n\x08VotePost\x12\x17.reddit.VotePostRequest\x1a\x18.reddit.VotePostResponse\x12:\n\x07GetPost\x12\x16.reddit.GetPostRequest\x1a\x17.reddit.GetPostResponse\x12L\n\rCreateComment\x12\x1c.reddit.CreateCommentRequest\x1a\x1d.reddit.CreateCommentResponse\x12\x46\n\x0bVoteComment\x12\x1a.reddit.VoteCommentRequest\x1a\x1b.reddit.VoteCommentResponse\x12j\n\x17GetTopCommentsUnderPost\x12&.reddit.GetTopCommentsUnderPostRequest\x1a\'.reddit.GetTopCommentsUnderPostResponse\x12s\n\x1aGetTopCommentsUnderComment\x12).reddit.GetTopCommentsUnderCommentRequest\x1a*.reddit.GetTopCommentsUnderCommentResponseb\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0creddit.proto\x12\x06reddit\"s\n\x11\x43reatePostRequest\x12\r\n\x05title\x18\x01 \x01(\t\x12\x0c\n\x04text\x18\x02 \x01(\t\x12\x13\n\timage_url\x18\x03 \x01(\tH\x00\x12\x13\n\tvideo_url\x18\x04 \x01(\tH\x00\x12\x0e\n\x06\x61uthor\x18\x05 \x01(\tB\x07\n\x05media\"0\n\x12\x43reatePostResponse\x12\x1a\n\x04post\x18\x01 \x01(\x0b\x32\x0c.reddit.Post\"2\n\x0fVotePostRequest\x12\x0f\n\x07post_id\x18\x01 \x01(\t\x12\x0e\n\x06upvote\x18\x02 \x01(\x08\"#\n\x10VotePostResponse\x12\x0f\n\x07message\x18\x01 \x01(\t\"!\n\x0eGetPostRequest\x12\x0f\n\x07post_id\x18\x01 \x01(\t\"-\n\x0fGetPostResponse\x12\x1a\n\x04post\x18\x01 \x01(\x0b\x32\x0c.reddit.Post\"u\n\x14\x43reateCommentRequest\x12\x0c\n\x04text\x18\x01 \x01(\t\x12\x0e\n\x06\x61uthor\x18\x02 \x01(\t\x12\x18\n\x0eparent_post_id\x18\x03 \x01(\tH\x00\x12\x1b\n\x11parent_comment_id\x18\x04 \x01(\tH\x00\x42\x08\n\x06parent\"9\n\x15\x43reateCommentResponse\x12 \n\x07\x63omment\x18\x01 \x01(\x0b\x32\x0f.reddit.Comment\"8\n\x12VoteCommentRequest\x12\x12\n\ncomment_id\x18\x01 \x01(\t\x12\x0e\n\x06upvote\x18\x02 \x01(\x08\"&\n\x13VoteCommentResponse\x12\x0f\n\x07message\x18\x01 \x01(\t\"@\n\x1eGetTopCommentsUnderPostRequest\x12\x0f\n\x07post_id\x18\x01 \x01(\t\x12\r\n\x05\x63ount\x18\x02 \x01(\x05\"D\n\x1fGetTopCommentsUnderPostResponse\x12!\n\x08\x63omments\x18\x01 \x03(\x0b\x32\x0f.reddit.Comment\"?\n\x1a\x45xpandCommentBranchRequest\x12\x12\n\ncomment_id\x18\x01 \x01(\t\x12\r\n\x05\x63ount\x18\x02 \x01(\x05\"I\n\x1b\x45xpandCommentBranchResponse\x12*\n\rcomment_nodes\x18\x01 \x03(\x0b\x32\x13.reddit.CommentNode\"\x17\n\x04User\x12\x0f\n\x07user_id\x18\x01 \x01(\t\"\xf0\x01\n\x04Post\x12\x0f\n\x07post_id\x18\x01 \x01(\t\x12\r\n\x05title\x18\x02 \x01(\t\x12\x0c\n\x04text\x18\x03 \x01(\t\x12\x13\n\timage_url\x18\x04 \x01(\tH\x00\x12\x13\n\tvideo_url\x18\x05 \x01(\tH\x00\x12\x0e\n\x06\x61uthor\x18\x06 \x01(\t\x12\r\n\x05score\x18\x07 \x01(\x05\x12!\n\x05state\x18\x08 \x01(\x0e\x32\x12.reddit.Post.State\x12\x18\n\x10publication_date\x18\t \x01(\t\"+\n\x05State\x12\n\n\x06NORMAL\x10\x00\x12\n\n\x06LOCKED\x10\x01\x12\n\n\x06HIDDEN\x10\x02\x42\x07\n\x05media\"\x84\x02\n\x07\x43omment\x12\x12\n\ncomment_id\x18\x01 \x01(\t\x12\x0c\n\x04text\x18\x02 \x01(\t\x12\x0e\n\x06\x61uthor\x18\x03 \x01(\t\x12\r\n\x05score\x18\x04 \x01(\x05\x12&\n\x06status\x18\x05 \x01(\x0e\x32\x16.reddit.Comment.Status\x12\x18\n\x10publication_date\x18\x06 \x01(\t\x12\x18\n\x0eparent_post_id\x18\x07 \x01(\tH\x00\x12\x1b\n\x11parent_comment_id\x18\x08 \x01(\tH\x00\x12\x13\n\x0bhas_replies\x18\t \x01(\x08\" \n\x06Status\x12\n\n\x06NORMAL\x10\x00\x12\n\n\x06HIDDEN\x10\x01\x42\x08\n\x06parent\"R\n\x0b\x43ommentNode\x12 \n\x07\x63omment\x18\x01 \x01(\x0b\x32\x0f.reddit.Comment\x12!\n\x08\x63hildren\x18\x02 \x03(\x0b\x32\x0f.reddit.Comment2\xb1\x04\n\rRedditService\x12\x43\n\nCreatePost\x12\x19.reddit.CreatePostRequest\x1a\x1a.reddit.CreatePostResponse\x12=\n\x08VotePost\x12\x17.reddit.VotePostRequest\x1a\x18.reddit.VotePostResponse\x12:\n\x07GetPost\x12\x16.reddit.GetPostRequest\x1a\x17.reddit.GetPostResponse\x12L\n\rCreateComment\x12\x1c.reddit.CreateCommentRequest\x1a\x1d.reddit.CreateCommentResponse\x12\x46\n\x0bVoteComment\x12\x1a.reddit.VoteCommentRequest\x1a\x1b.reddit.VoteCommentResponse\x12j\n\x17GetTopCommentsUnderPost\x12&.reddit.GetTopCommentsUnderPostRequest\x1a\'.reddit.GetTopCommentsUnderPostResponse\x12^\n\x13\x45xpandCommentBranch\x12\".reddit.ExpandCommentBranchRequest\x1a#.reddit.ExpandCommentBranchResponseb\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -44,20 +44,22 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _globals['_GETTOPCOMMENTSUNDERPOSTREQUEST']._serialized_end=702
   _globals['_GETTOPCOMMENTSUNDERPOSTRESPONSE']._serialized_start=704
   _globals['_GETTOPCOMMENTSUNDERPOSTRESPONSE']._serialized_end=772
-  _globals['_GETTOPCOMMENTSUNDERCOMMENTREQUEST']._serialized_start=774
-  _globals['_GETTOPCOMMENTSUNDERCOMMENTREQUEST']._serialized_end=844
-  _globals['_GETTOPCOMMENTSUNDERCOMMENTRESPONSE']._serialized_start=846
-  _globals['_GETTOPCOMMENTSUNDERCOMMENTRESPONSE']._serialized_end=917
-  _globals['_USER']._serialized_start=919
-  _globals['_USER']._serialized_end=942
-  _globals['_POST']._serialized_start=945
-  _globals['_POST']._serialized_end=1185
-  _globals['_POST_STATE']._serialized_start=1133
-  _globals['_POST_STATE']._serialized_end=1176
-  _globals['_COMMENT']._serialized_start=1188
-  _globals['_COMMENT']._serialized_end=1427
-  _globals['_COMMENT_STATUS']._serialized_start=1385
-  _globals['_COMMENT_STATUS']._serialized_end=1417
-  _globals['_REDDITSERVICE']._serialized_start=1430
-  _globals['_REDDITSERVICE']._serialized_end=2012
+  _globals['_EXPANDCOMMENTBRANCHREQUEST']._serialized_start=774
+  _globals['_EXPANDCOMMENTBRANCHREQUEST']._serialized_end=837
+  _globals['_EXPANDCOMMENTBRANCHRESPONSE']._serialized_start=839
+  _globals['_EXPANDCOMMENTBRANCHRESPONSE']._serialized_end=912
+  _globals['_USER']._serialized_start=914
+  _globals['_USER']._serialized_end=937
+  _globals['_POST']._serialized_start=940
+  _globals['_POST']._serialized_end=1180
+  _globals['_POST_STATE']._serialized_start=1128
+  _globals['_POST_STATE']._serialized_end=1171
+  _globals['_COMMENT']._serialized_start=1183
+  _globals['_COMMENT']._serialized_end=1443
+  _globals['_COMMENT_STATUS']._serialized_start=1401
+  _globals['_COMMENT_STATUS']._serialized_end=1433
+  _globals['_COMMENTNODE']._serialized_start=1445
+  _globals['_COMMENTNODE']._serialized_end=1527
+  _globals['_REDDITSERVICE']._serialized_start=1530
+  _globals['_REDDITSERVICE']._serialized_end=2091
 # @@protoc_insertion_point(module_scope)

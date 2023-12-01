@@ -43,6 +43,6 @@ class RedditClient:
         request = reddit_pb2.GetTopCommentsUnderPostRequest(post_id=post_id, count=count)
         return self.stub.GetTopCommentsUnderPost(request)
 
-    def get_top_comments_under_comment(self, comment_id, count):
-        request = reddit_pb2.GetTopCommentsUnderCommentRequest(comment_id=comment_id, count=count)
-        return self.stub.GetTopCommentsUnderComment(request)
+    def expand_comment_branch(self, comment_id, count):
+        request = reddit_pb2.ExpandCommentBranchRequest(comment_id=comment_id, count=count)
+        return self.stub.ExpandCommentBranch(request)

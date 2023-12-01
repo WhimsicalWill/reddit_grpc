@@ -44,10 +44,10 @@ class RedditServiceStub(object):
                 request_serializer=reddit__pb2.GetTopCommentsUnderPostRequest.SerializeToString,
                 response_deserializer=reddit__pb2.GetTopCommentsUnderPostResponse.FromString,
                 )
-        self.GetTopCommentsUnderComment = channel.unary_unary(
-                '/reddit.RedditService/GetTopCommentsUnderComment',
-                request_serializer=reddit__pb2.GetTopCommentsUnderCommentRequest.SerializeToString,
-                response_deserializer=reddit__pb2.GetTopCommentsUnderCommentResponse.FromString,
+        self.ExpandCommentBranch = channel.unary_unary(
+                '/reddit.RedditService/ExpandCommentBranch',
+                request_serializer=reddit__pb2.ExpandCommentBranchRequest.SerializeToString,
+                response_deserializer=reddit__pb2.ExpandCommentBranchResponse.FromString,
                 )
 
 
@@ -96,8 +96,8 @@ class RedditServiceServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
-    def GetTopCommentsUnderComment(self, request, context):
-        """Retrieve a list of N most upvoted comments under a comment
+    def ExpandCommentBranch(self, request, context):
+        """RPC to expand a comment branch to a depth of 2
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -136,10 +136,10 @@ def add_RedditServiceServicer_to_server(servicer, server):
                     request_deserializer=reddit__pb2.GetTopCommentsUnderPostRequest.FromString,
                     response_serializer=reddit__pb2.GetTopCommentsUnderPostResponse.SerializeToString,
             ),
-            'GetTopCommentsUnderComment': grpc.unary_unary_rpc_method_handler(
-                    servicer.GetTopCommentsUnderComment,
-                    request_deserializer=reddit__pb2.GetTopCommentsUnderCommentRequest.FromString,
-                    response_serializer=reddit__pb2.GetTopCommentsUnderCommentResponse.SerializeToString,
+            'ExpandCommentBranch': grpc.unary_unary_rpc_method_handler(
+                    servicer.ExpandCommentBranch,
+                    request_deserializer=reddit__pb2.ExpandCommentBranchRequest.FromString,
+                    response_serializer=reddit__pb2.ExpandCommentBranchResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -254,7 +254,7 @@ class RedditService(object):
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
-    def GetTopCommentsUnderComment(request,
+    def ExpandCommentBranch(request,
             target,
             options=(),
             channel_credentials=None,
@@ -264,8 +264,8 @@ class RedditService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/reddit.RedditService/GetTopCommentsUnderComment',
-            reddit__pb2.GetTopCommentsUnderCommentRequest.SerializeToString,
-            reddit__pb2.GetTopCommentsUnderCommentResponse.FromString,
+        return grpc.experimental.unary_unary(request, target, '/reddit.RedditService/ExpandCommentBranch',
+            reddit__pb2.ExpandCommentBranchRequest.SerializeToString,
+            reddit__pb2.ExpandCommentBranchResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

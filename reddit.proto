@@ -21,11 +21,8 @@ service RedditService {
     // Retrieve a list of N most upvoted comments under a post
     rpc GetTopCommentsUnderPost (GetTopCommentsUnderPostRequest) returns (GetTopCommentsUnderPostResponse);
 
-    // Retrieve a list of N most upvoted comments under a comment
-    rpc GetTopCommentsUnderComment (GetTopCommentsUnderCommentRequest) returns (GetTopCommentsUnderCommentResponse);
-
-    // Expand a comment branch
-    // rpc ExpandCommentBranch (ExpandCommentBranchRequest) returns (ExpandCommentBranchResponse);
+    // RPC to expand a comment branch to a depth of 2
+    rpc ExpandCommentBranch (ExpandCommentBranchRequest) returns (ExpandCommentBranchResponse);
 }
 
 message CreatePostRequest {
@@ -92,25 +89,15 @@ message GetTopCommentsUnderPostResponse {
     repeated Comment comments = 1; // List of top comments
 }
 
-message GetTopCommentsUnderCommentRequest {
+message ExpandCommentBranchRequest {
     string comment_id = 1;
-    int32 count = 2;
+    int32 count = 2; // Number of top comments to retrieve at each level
 }
 
-message GetTopCommentsUnderCommentResponse {
-    repeated Comment comments = 1; // List of top comments
+// Response structure for a comment branch of depth 2
+message ExpandCommentBranchResponse {
+    repeated CommentNode comment_nodes = 1; // A tree of comments up to depth 2
 }
-
-// message ExpandCommentBranchRequest {
-//     string comment_id = 1;
-//     int32 depth = 2; // Depth of the tree to retrieve
-// }
-
-// message ExpandCommentBranchResponse {
-//     // Define the structure to represent a comment tree
-//     // This could be a list of comments with their replies
-//     // TODO: Define the structure
-// }
 
 message User {
     string user_id = 1;  // A human-readable user ID
@@ -152,4 +139,13 @@ message Comment {
         string parent_post_id = 7;
         string parent_comment_id = 8;
     }
+
+    // Indicates whether this comment has replies
+    bool has_replies = 9;
+}
+
+// Recursive structure to hold a comment and (potentially) its top replies
+message CommentNode {
+    Comment comment = 1;
+    repeated Comment children = 2; // Replies to this comment
 }

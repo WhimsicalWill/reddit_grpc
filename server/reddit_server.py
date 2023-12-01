@@ -72,13 +72,17 @@ class RedditService(reddit_pb2_grpc.RedditServiceServicer):
             status=reddit_pb2.Comment.NORMAL,
             publication_date=str(time.strftime("%Y-%m-%d %H:%M:%S")),
         )
-        
-        # Set the media based on the request
+
+        # Set the parent based on the request
         if request.HasField("parent_post_id"):
             new_comment.parent_post_id = request.parent_post_id
         elif request.HasField("parent_comment_id"):
             new_comment.parent_comment_id = request.parent_comment_id
-        else:  # No media: raise an error
+            # Update the has_replies field of the parent comment
+            if request.parent_comment_id in comments:
+                parent_comment = comments[request.parent_comment_id]
+                parent_comment.has_replies = True
+        else:  # No parent: raise an error
             context.set_code(grpc.StatusCode.INVALID_ARGUMENT)
             context.set_details('Must provide either parent_post_id or parent_comment_id')
             return reddit_pb2.CreateCommentResponse()
@@ -100,11 +104,25 @@ class RedditService(reddit_pb2_grpc.RedditServiceServicer):
         sorted_comments = sorted(filtered_comments, key=lambda x: x.score, reverse=True)
         return reddit_pb2.GetTopCommentsUnderPostResponse(comments=sorted_comments[:request.count])
 
-    def GetTopCommentsUnderComment(self, request, context):
+    def ExpandCommentBranch(self, request, context):
+        # Retrieve and sort the top comments under the post
         filtered_comments = [comment for comment in comments.values() if comment.parent_comment_id == request.comment_id]
         sorted_comments = sorted(filtered_comments, key=lambda x: x.score, reverse=True)
-        return reddit_pb2.GetTopCommentsUnderCommentResponse(comments=sorted_comments[:request.count])
+        top_comments = sorted_comments[:request.count]
 
+        # Create a CommentNode for each top comment
+        comment_nodes = []
+        for comment in top_comments:
+            # Retrieve and sort the top comments under this specific comment
+            filtered_child_comments = [child_comment for child_comment in comments.values() 
+                                       if child_comment.parent_comment_id == comment.comment_id]
+            sorted_child_comments = sorted(filtered_child_comments, key=lambda x: x.score, reverse=True)
+            top_replies = sorted_child_comments[:request.count]
+
+            # Create the CommentNode for this comment and its top replies
+            comment_node = reddit_pb2.CommentNode(comment=comment, children=top_replies)
+            comment_nodes.append(comment_node)
+        return reddit_pb2.ExpandCommentBranchResponse(comment_nodes=comment_nodes)
 
 def parse_arguments():
     parser = argparse.ArgumentParser(description='Reddit gRPC Server')

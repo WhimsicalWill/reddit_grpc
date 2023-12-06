@@ -1,7 +1,7 @@
 # Install dependencies
 
 ```bash
-pip install -r requirements.txt
+pip install grpcio grpcio-tools
 ```
 
 # Generate stubs and gRPC code from .proto file

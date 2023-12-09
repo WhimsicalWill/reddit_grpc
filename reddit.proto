@@ -120,7 +120,7 @@ message Post {
         HIDDEN = 2;
     }
     State state = 8;
-    string publication_date = 9;  // TODO: Consider using a proper timestamp type
+    string publication_date = 9;
     string subreddit_id = 10;  // ID of the subreddit the post belongs to
     repeated string tags = 11;  // Tags associated with the post
 }
@@ -135,7 +135,7 @@ message Comment {
         HIDDEN = 1;
     }
     Status status = 5;
-    string publication_date = 6;  // TODO: Consider using a proper timestamp type
+    string publication_date = 6;
 
     // Reference either a parent post or a parent comment
     oneof parent {

@@ -17,10 +17,12 @@ This just checks the business logic of the retrieve_and_expand_comments() functi
 To run unit tests, execute the following command:
 
 ```bash
-python test_retrieval.py
+python test_unit.py
 ```
 
 # End-to-end testing
+
+Additionally, follow the below steps to complete the end-to-end testing:
 
 ## Start the server
 
@@ -28,8 +30,8 @@ python test_retrieval.py
 python -m server.reddit_server
 ```
 
-## Run the test code
+## Run the end-to-end test code
 
 ```bash
-python retrieval.py
+python test_end_to_end.py
 ```

@@ -162,30 +162,6 @@ class RedditService(reddit_pb2_grpc.RedditServiceServicer):
 
         return reddit_pb2.GetPostResponse(post=post)
 
-    def GetPost(self, request, context):
-        with sqlite3.connect('reddit.db') as conn:
-            cursor = conn.cursor()
-
-            cursor.execute("SELECT * FROM posts WHERE post_id = ?", (request.post_id,))
-            post_data = cursor.fetchone()
-
-        if not post_data:
-            context.set_code(grpc.StatusCode.NOT_FOUND)
-            context.set_details("Post not found")
-            return reddit_pb2.GetPostResponse()
-
-        post = reddit_pb2.Post(post_id=post_data[0],
-                            title=post_data[1],
-                            text=post_data[2],
-                            author=post_data[3],
-                            score=post_data[4],
-                            state=post_data[5],
-                            publication_date=post_data[6],
-                            subreddit_id=post_data[7],
-                            tags=post_data[8].split(','))
-
-        return reddit_pb2.GetPostResponse(post=post)
-
     def VoteComment(self, request, context):
         with sqlite3.connect('reddit.db') as conn:
             cursor = conn.cursor()
